@@ -19,56 +19,65 @@ module.exports = {
     },
     watch: true,
     devServer: {
-        contentBase: PATH.dist
+        contentBase: PATH.dist,
+        historyApiFallback: true
     },
     module: {
         rules: [{
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: /node_modules/
+        },
+        {
+            test: /\.scss$/,
+            use: [
+                MiniCssExtractPlugin.loader,
+
+                {
+                    loader: "css-loader",
+                    options: {
+                        url: false
+                    }
+                },
+
+                {
+                    loader: 'postcss-loader',
+                    options: {
+                        config: {
+                            path: './src/js/postcss.config.js',
+                        }
+                    }
+                },
+
+                'sass-loader'
+            ]
+        },
+        {
+            test: /\.(woff|woff2)$/,
+            use: [{
+                loader: 'url-loader'
             },
             {
-                test: /\.scss$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'fonts'
+                }
+            }]
 
-                    {
-                        loader: "css-loader",
-                        options: {
-                            url: false
-                        }
-                    }, {
-                        loader: 'postcss-loader',
-                        options: {
-                            config: {
-                                path: './src/js/postcss.config.js',
-                            }
-                        }
-                    },
-
-                    'sass-loader'
-                ]
+        }, {
+            test: /\.(png|svg|gif|jpeg|jpg)$/,
+            use: [{
+                loader: 'url-loader'
             },
             {
-                test: /\.(woff|woff2)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: 'fonts'
-                    }
-                }]
-
-            }, {
-                test: /\.(png|svg|gif|jpeg|jpg)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: 'img'
-                    }
-                }]
-            }
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'img'
+                }
+            }]
+        }
 
         ]
     },
@@ -77,13 +86,13 @@ module.exports = {
             filename: './css/[name].css'
         }),
         new CopyPlugin([{
-                from: `${PATH.src}img`,
-                to: 'img'
-            },
-            {
-                from: `${PATH.src}fonts`,
-                to: 'fonts'
-            }
+            from: `${PATH.src}img`,
+            to: 'img'
+        },
+        {
+            from: `${PATH.src}fonts`,
+            to: 'fonts'
+        }
 
         ]),
         new HtmlWebpackPlugin({

@@ -128,7 +128,9 @@ module.exports= {
                 test:/\.(png|jprg|svg|gif)$/i,
                 use:[{
                     loader:'file-loader',
-                   
+                    options:{
+                        outputPath:'img'
+                    }
                 }]
             },
             {
@@ -139,7 +141,9 @@ module.exports= {
                 test:/\.(ttf|woff|woff2)$/i,
                 use:[{
                     loader:'file-loader',
-                    
+                    options:{
+                        outputPath:'fonts'
+                    }
                 }]
             }
         ]

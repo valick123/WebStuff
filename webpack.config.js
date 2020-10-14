@@ -25,7 +25,7 @@ const optimization = ()=>{
     return config
 }
 
-const fileName = ext => isDev? `[name].${ext}`: `[name].[hash].${ext}`
+const fileName = (ext,dir) => isDev? `${dir}[name].${ext}`: `${dir}[name].[hash].${ext}`
 
 const cssLoaders = (addition)=>{
     const loaders = [
@@ -58,12 +58,12 @@ module.exports= {
         index:['@babel/polyfill','./src/js/index.jsx']
     },
     output:{
-        filename:fileName('js'),
+        filename:fileName('js','js/'),
         path: path.resolve(__dirname, 'dist')
     },
     optimization:optimization(),
     devServer:{
-        port:3001,
+        port:4001,
         hot: isDev
     },
     plugins:[
@@ -83,7 +83,7 @@ module.exports= {
         //     ]
         // }),
         new MiniCssExtractPlugin({
-            filename:fileName('css')
+            filename:fileName('css','css/')
         })
     ],
     module:{
@@ -129,8 +129,8 @@ module.exports= {
                 use:[{
                     loader:'file-loader',
                     options:{
-                        outputPath:'img'
-                    }
+                       outputPath:'img'
+                   }
                 }]
             },
             {

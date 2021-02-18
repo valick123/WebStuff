@@ -29,7 +29,7 @@ const fileName = (ext,dir) => isDev? `${dir}[name].${ext}`: `${dir}[name].[hash]
 
 const cssLoaders = (addition)=>{
     const loaders = [
-        MiniCssExtractPlugin.loader,
+        isDev?'style-loader':MiniCssExtractPlugin.loader,
         'css-loader'
     ]
     if(addition){
@@ -55,7 +55,7 @@ const babelOptions = (preset)=>{
 
 module.exports= {
     entry:{
-        index:['@babel/polyfill','./src/js/index.jsx']
+        index:['@babel/polyfill','./src/js/index.js']
     },
     output:{
         filename:fileName('js','js/'),
@@ -64,7 +64,8 @@ module.exports= {
     optimization:optimization(),
     devServer:{
         port:4001,
-        hot: isDev
+        hot: isDev,
+        historyApiFallback: true,
     },
     plugins:[
         new HTMLWebpackPlugin({
@@ -93,7 +94,7 @@ module.exports= {
                 exclude:/node_modules/,
                 use:{
                     loader:"babel-loader",
-                    options:babelOptions()
+                    options:babelOptions('@babel/preset-react')
                 }
             },
             {
@@ -125,7 +126,7 @@ module.exports= {
                 use:cssLoaders('sass-loader')  
                },
             {
-                test:/\.(png|jprg|svg|gif)$/i,
+                test:/\.(png|jprg|svg|gif|jpg)$/i,
                 use:[{
                     loader:'file-loader',
                     options:{

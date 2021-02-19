@@ -5,11 +5,7 @@
 }
 
 
-body {
-    overflow-x: hidden;
-    font-family: Roboto, sans-serif;
-    background-color: red;
-}
+
 
 html,
 body {
@@ -17,23 +13,13 @@ body {
     height: 100%;
 
 
-    & .wrapper {
+    & .app {
         padding: 0;
         display: flex;
         min-height: 100%;
         flex-direction: column;
         justify-content: space-between;
 
-        & .main {
-            flex-grow: 1;
-        }
-
-
-        & .content {
-            max-width: 1020px;
-            margin: 0 auto;
-            padding: 0 10px;
-
-        }
+        
     }
 }

@@ -74,9 +74,26 @@ module.exports= {
             template:'./src/index.html',
             minify:{
                 collapseWhitespace:isProd
-            }
+            },
+            base:isDev?"/":"./"
         }),
         new CleanWebpackPlugin(),
+        new CopyWbpackPlugin({
+            patterns:[
+                // {
+                //     from:path.resolve(__dirname, './src/img/favicon.ico'),
+                //     to:path.resolve(__dirname, 'dist')
+                // },
+                {
+                    from:path.resolve(__dirname,'./src/404.html'),
+                    to:path.resolve(__dirname, 'dist')
+                },
+                {
+                    from:path.resolve(__dirname,'./db'),
+                    to:path.resolve(__dirname,'dist')
+                }
+            ]
+        }),
         new MiniCssExtractPlugin({
             filename:fileName('css')
         })

@@ -6,13 +6,13 @@ import {NoMatchPageComponent} from "../components/pages/noMatch.component";
 import HeaderComponent from "../components/layout/header.component";
 import {FooterComponent} from "../components/layout/footer.component";
 
-
+const repoName = "/repo-name/";
 
 export const AppComponent = props =>{
     
     
         return(    
-                <Router>
+                <Router basename={process.env.NODE_ENV==="development"?null:repoName}>
                         <HeaderComponent/>
                                <Switch>
                                 <Route exact path="/" component = {HomePageComponent} />
